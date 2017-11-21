@@ -18,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/BobNobrain/anorm/issues"
   },
-  "homepage": "https://github.com/BobNobrain/anorm#readme"
+  "homepage": "https://github.com/BobNobrain/anorm#readme",
+  "dependencies": {
+    "change-case": "^3.0.1"
+  }
 }

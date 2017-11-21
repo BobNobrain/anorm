@@ -1,17 +1,13 @@
 import Type from './Type';
-import { isDirective, apply } from '../directives';
+import createColumn from './helpers';
 
+/**
+ * Generic string type (for CHAR, VARCHAR, etc.)
+ */
 class GenericString extends Type {
-    constructor(name, n, directives) {
+    constructor(name, n = 50) {
         super(name);
-        if (!isDirective(n)) {
-            this.n = n;
-        } else {
-            this.n = 50;
-            directives.unshift(n);
-        }
-        this.name += '(' + n + ')';
-        apply(directives, this);
+        this.n = n;
     }
 
     check(nval) {
@@ -26,12 +22,13 @@ class GenericString extends Type {
 }
 
 export const Varchar = (n, ...directives) => {
-    return new GenericString('VARCHAR', n, directives);
+    return createColumn('VARCHAR', n, GenericString, directives);
 };
 
 export const Char = (n, ...directives) => {
-    return new GenericString('CHAR', n, directives);
+    return createColumn('CHAR', n, GenericString, directives);
 };
 
+// aliases
 export const TString = Varchar;
 export const Text = Varchar; // TODO: use mb some specific TEXT types?
