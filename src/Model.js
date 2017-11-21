@@ -1,4 +1,15 @@
-const makeField = (name, type, entity) => {
+import Field from './Field';
+
+const makeField = (name, type, Entity) => {
+    Object.defineProperty(Entity, name, {
+        configurable: false,
+        enumerable: true,
+        writable: false,
+        value: new Field(name, type, Entity)
+    });
+};
+
+const makeProp = (name, type, entity) => {
     entity._anorm[name] = {
         value: null,
         changed: false
@@ -34,7 +45,7 @@ export class Model {
         const fields = this.modelInfo.fields;
         for (let fname in fields) {
             if (!fields.hasOwnProperty(fname)) continue;
-            makeField(fname, fields[fname], this);
+            makeProp(fname, fields[fname], this);
         }
     }
 
@@ -64,4 +75,9 @@ export function model(fields, ...directives) {
             }
         }
     });
+
+    for (let fname in fields) {
+        if (!fields.hasOwnProperty(fname)) continue;
+        makeField(fname, fields[fname], Entity);
+    }
 }
