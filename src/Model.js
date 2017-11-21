@@ -9,7 +9,7 @@ import { apply } from './directives';
  * @param  {Column}              column  Column itself
  * @param  {class extends Model} Entity  a class extending model
  */
-const assignColumn = (colName, column, Entity) => {
+export const assignColumn = (colName, column, Entity) => {
     Object.defineProperty(Entity, colName, {
         configurable: false,
         enumerable: true,
@@ -148,11 +148,12 @@ export function model(columns, ...directives) {
             column = new Column(new ModelType(column));
         }
 
-        // end column initialization
-        column.finish(colName);
-
         // add it to the model
         assignColumn(colName, column, Entity);
+        column.model = Entity;
+
+        // end column initialization
+        column.finish(colName);
     }
 
     // here we go, return our upgraded class

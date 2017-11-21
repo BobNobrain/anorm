@@ -6,9 +6,10 @@ export default class Column {
         this.type = type;
         this.name = null;
         this.columnName = null; // in db
+        this.model = null;
 
         this.autoFetch = false;
-        this.backref = null;
+        // this.backref = null;
         this.constraints = { unique: false, primary: false };
         this.indexes = [];
         this.nullable = false;

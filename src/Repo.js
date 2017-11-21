@@ -2,3 +2,5 @@
 export default class Repo {
 
 }
+
+Repo.default = new Repo();
